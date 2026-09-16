@@ -455,7 +455,7 @@ class VDWOverlapPotential(FlatBottomPotential, DistancePotential):
         vdw_radii[1:119] = torch.tensor(
             const.vdw_radii, dtype=torch.float32, device=atom_chain_id.device
         )
-        ref_elem = feats["ref_element"].cuda().float() if self.use_cpu_memory else feats["ref_element"].float()
+        ref_elem = feats["ref_element"].to(vdw_radii.device).float()
         atom_vdw_radii = (
             ref_elem @ vdw_radii.unsqueeze(-1)
         ).squeeze(-1)[0]
